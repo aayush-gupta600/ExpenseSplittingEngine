@@ -24,7 +24,7 @@ public class User {
     @NotBlank
     @Size(min = 4, max = 50)
     @Column(nullable = false)
-    private String name;
+    private String username;
 
     @NotBlank
     @Email

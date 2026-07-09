@@ -1,22 +1,32 @@
 package com.college.expensesplittingengine.Exceptions;
+import lombok.Getter;
+@Getter
 public class ResourceNotFoundException extends RuntimeException {
-    String ResourceName;
-    String fieldName;
-    String field;
-    Long fieldId;
-    public ResourceNotFoundException(String ResourceName,String fieldName,String field) {
-        super(String.format("%s Not Found with %s %s", ResourceName, fieldName, field));
-        this.ResourceName = ResourceName;
+
+    private final String resourceName;
+    private final String fieldName;
+    private final String field;
+    private final Long fieldId;
+
+    public ResourceNotFoundException(String resourceName,
+                                     String fieldName,
+                                     String field) {
+        super(String.format("%s not found with %s = %s",
+                resourceName, fieldName, field));
+        this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.field = field;
+        this.fieldId = null;
     }
-    public ResourceNotFoundException(String ResourceName,String field,Long fieldId) {
-        super(String.format("%s Not Found with %s %s", ResourceName, field, fieldId));
-        this.ResourceName = ResourceName;
-        this.field = field;
-        this.fieldId = fieldId;
-    }
-    public ResourceNotFoundException() {
 
+    public ResourceNotFoundException(String resourceName,
+                                     String fieldName,
+                                     Long fieldId) {
+        super(String.format("%s not found with %s = %d",
+                resourceName, fieldName, fieldId));
+        this.resourceName = resourceName;
+        this.fieldName = fieldName;
+        this.field = null;
+        this.fieldId = fieldId;
     }
 }

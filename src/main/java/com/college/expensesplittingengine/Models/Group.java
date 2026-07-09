@@ -35,6 +35,9 @@ public class Group {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(nullable = false, unique = true)
+    private String groupCode;
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();

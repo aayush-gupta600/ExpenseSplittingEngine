@@ -25,20 +25,24 @@ public class Expenses {
 
     @NotBlank
     @Size(min = 1, max = 255)
+    @Column(nullable = false)
     private String description;
 
     @NotNull
-    @DecimalMin("0.0")
+    @DecimalMin(value = "0.01")
+    @Column(nullable = false)
     private BigDecimal amount;
 
-    @NotBlank
-    private String splitType;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SplitType splitType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paid_by", nullable = false)
     private User paidBy;
 
