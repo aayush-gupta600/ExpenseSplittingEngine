@@ -6,8 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface ExpenseRepo extends JpaRepository<Expenses, Long> {
 
     Page<Expenses> findByGroup(Group group, Pageable pageable);
 
+    List<Expenses> findByGroup(Group group);
 }

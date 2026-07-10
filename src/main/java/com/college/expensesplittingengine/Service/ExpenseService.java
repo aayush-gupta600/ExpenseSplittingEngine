@@ -49,14 +49,12 @@ public class ExpenseService {
                                 "username",
                                 username));
     }
-
     private void validateMember(Group group, User user) {
 
         if (!groupMembersRepo.existsByGroupAndUser(group, user)) {
             throw new RuntimeException("User is not a member of this group");
         }
     }
-
     private ExpenseResponse mapToResponse(Expenses expense) {
 
         return new ExpenseResponse(
@@ -69,7 +67,6 @@ public class ExpenseService {
                 expense.getCreatedAt()
         );
     }
-
     @Transactional
     public MessageResponse addExpense(String groupCode,
                                       CreateExpenseRequest request) {
@@ -172,7 +169,6 @@ public class ExpenseService {
             expenseSplitRepo.save(split);
         }
     }
-
     private void percentageSplit(Expenses expense,
                                  Map<String, BigDecimal> splits) {
 
@@ -194,13 +190,10 @@ public class ExpenseService {
                                     "User",
                                     "username",
                                     entry.getKey()));
-
             validateMember(expense.getGroup(), user);
-
             BigDecimal amount = expense.getAmount()
                     .multiply(entry.getValue())
                     .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
-
             ExpenseSplit split = new ExpenseSplit();
 
             split.setExpense(expense);
@@ -211,24 +204,19 @@ public class ExpenseService {
             expenseSplitRepo.save(split);
         }
     }
-
     public ExpensePageResponse getGroupExpenses(String groupCode,
                                                 int pageNo,
                                                 int pageSize,
                                                 String sortBy,
                                                 String sortDir) {
-
         Group group = groupRepo.findByGroupCode(groupCode)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Group",
                                 "groupCode",
                                 groupCode));
-
         User user = getCurrentUser();
-
         validateMember(group, user);
-
         Sort sort = sortDir.equalsIgnoreCase("asc")
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
@@ -249,7 +237,6 @@ public class ExpenseService {
         response.setTotalElements(page.getTotalElements());
         response.setTotalPages(page.getTotalPages());
         response.setLastPage(page.isLast());
-
         return response;
     }
     @Transactional
